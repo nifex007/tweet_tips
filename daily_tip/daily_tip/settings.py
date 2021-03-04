@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django-rest',
+    'rest_framework',
     'api',
-    'twitter',
+    'twitterapp',
     'tips',
 ]
 
