@@ -16,11 +16,7 @@ class TwitterView(View):
         user = self.user_id
         # get the last 200 tweets 
         # format_response(tweets)
-        
         # print(get_tweet('1362776037428502534'))
-
-
-        extract_media_links(get_tweet("1356937628566880260"))
 
         return HttpResponse("<h2> Twitter </h2>")
 
