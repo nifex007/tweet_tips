@@ -3,6 +3,8 @@ from django.http import HttpResponse
 import tweepy
 from django.views import View
 from twitterapp.utils import tweepy_api_auth, format_response, get_tweet, extract_media_links
+from tips.models import Tips, Links
+from tips.utils import save_tip
 
 
 # Create your views here.
@@ -16,7 +18,12 @@ class TwitterView(View):
         user = self.user_id
         # get the last 200 tweets 
         # format_response(tweets)
-        # print(get_tweet('1362776037428502534'))
+        t = get_tweet('1356230120604803075')      
+        print(t)
+
+        save_tip(t)
+
+
 
         return HttpResponse("<h2> Twitter </h2>")
 

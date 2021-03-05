@@ -6,9 +6,9 @@ class Tips(models.Model):
     Tips Model
     (tweets)
     """
-    id = models.BigIntegerField(primary_key=True, blank=False)
+    id = models.BigIntegerField(primary_key=True, blank=False, unique=True)
     tip = models.TextField(blank=False)
-    timestamp = models.TimeField(blank=False)
+    timestamp = models.DateTimeField(blank=False)
     author = models.CharField(blank=False, unique=False, max_length=255)
 
     class Meta:
