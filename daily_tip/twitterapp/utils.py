@@ -33,11 +33,12 @@ def get_tweet(id):
    tweet = tweet._json
    return format_response(tweet)
 
-def get_timeline_tweets(user, count):
+def get_timeline_tweets(user, count, since=''):
     tweets = api.user_timeline(screen_name=user,
                                     count=count,
                                     include_rts=False,
-                                    tweet_mode='extended')
+                                    tweet_mode='extended',
+                                    since_id=since)
     tweets = tweets[0]._json # extract json part of tweepy response
     
     return format_response(tweets)

@@ -28,7 +28,7 @@ def save_tip(tweet):
         
         return 'Tip Saved'
     except BaseException as e:
-        print("Tip can not be saved")
+        print("Exception {}".format(e))
         traceback.print_exc()
         return 'Tip not saved'
 
@@ -36,6 +36,7 @@ def save_tip(tweet):
     
 
 def save_links(links_dict, tip):
+    
     # {'id': 1356937628566880260,
     # 'links': ['https://pbs.twimg.com/media/EtTO-UfWgAM3SNZ.png']
     # }

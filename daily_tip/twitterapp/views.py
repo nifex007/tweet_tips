@@ -19,8 +19,6 @@ class TwitterView(View):
         # get the last 200 tweets 
         # format_response(tweets)
         t = get_tweet('1356230120604803075')      
-        print(t)
-
         save_tip(t)
 
 
