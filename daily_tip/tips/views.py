@@ -7,8 +7,6 @@ from tips.models import Tips
 class TipsView(ListView):
     all_tips =  Tips.objects.all().order_by('-likes', '-retweets')
 
-    # paginate_by = 10
-    # model = Tips
     
     def get(self, request):
         context ={}
@@ -24,7 +22,20 @@ class TipsView(ListView):
         return render(request, 'tips/tips_home.html', context)
         
         
-        
+class SearchView(ListView):
+
+    def get(self, request, **kwargs):
+        context = {}
+        search_results = Tips.objects.filter(tip__search=kwargs['q'])
+        p = Paginator(search_results, 15)
+        page_number = request.GET.get('page')
+        context['page_obj'] = p.get_page(page_number)
+        search_count = len(search_results)
+        context['search_count'] = search_count
+        context['search_results'] = search_results
+
+        return render(request, 'tips/tips_search.html', context)
+
             
 
 
