@@ -2,6 +2,7 @@ import tweepy
 import os
 import json 
 import pprint
+from tips.models import Tips
 
 consumer_key = os.environ.get('TWITTER_API_KEY')
 consumer_secret = os.environ.get('TWITTER_API_SECRET')
@@ -33,17 +34,29 @@ def get_tweet(id):
    tweet = tweet._json
    return format_response(tweet)
 
-count = 3
-def get_timeline_tweets():
+
+def get_timeline_tweets(screen_name, since):
     api = tweepy_api_auth()
-    tweets = api.user_timeline(screen_name='python_tip',
-                                    count=count,
-                                    include_rts=False,
+    if since is None:
+        tweets = api.user_timeline(screen_name=screen_name,
+                                    include_rts=True,
                                     tweet_mode='extended',
+                                    exclude_replies=True,
+                                    count=2
                                     )
-    tweets = tweets[0]._json # extract json part of tweepy response
+    else:
+        tweets = api.user_timeline(screen_name=screen_name,
+                                        include_rts=True,
+                                        tweet_mode='extended',
+                                        since_id=since,
+                                        count=2,
+                                        exclude_replies=True,
+                                        )
     
-    return format_response(tweets)
+    
+    tweets_list = [tweet._json for tweet in tweets] # extract json part of tweepy response
+   
+    return format_response(tweets_list)
 
 
 def extract_media_links(tweet):
@@ -65,8 +78,6 @@ def extract_media_links(tweet):
         return has_link, link_dict
     
     return has_link, link_dict
-
-
 
 
 

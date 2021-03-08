@@ -1,8 +1,11 @@
 from tips.models import Tips, Links
 from dateutil.parser import parse
 import datetime 
-from twitterapp.utils import extract_media_links
+from tips.models import Tips
+from twitterapp.utils import extract_media_links, get_timeline_tweets
 import traceback
+
+
 
 def convert_time(date_string):
     date_ = parse(date_string)
@@ -11,11 +14,11 @@ def convert_time(date_string):
 
 def save_tip(tweet):
     """
-    Write tip to datbase
+    Write tip to database
     """
     try:
         t = Tips(id=tweet['id'],
-            tip=tweet['text'],
+            tip=tweet['full_text'],
             author=tweet['user']['screen_name'],
             timestamp=convert_time(tweet['created_at']),
             likes=tweet['favorite_count'],
@@ -35,8 +38,6 @@ def save_tip(tweet):
         return 'Tip not saved'
 
 
-    
-
 def save_links(links_dict, tip):
 
     # {'id': 1356937628566880260,
@@ -54,6 +55,28 @@ def save_links(links_dict, tip):
         print('Exception occured: {}'.format(e))
         traceback.print_exc()
         return "Link not saved :("
+
+
+def process():
+    screen_name = 'python_tip'
+    last_tip = Tips.objects.last()
+    last_tip_id = None
+    try:
+        last_tip_id = last_tip.id
+    except BaseException as e:
+        print("Exception {}".format(e))
+        traceback.print_exc()
+    # get tweets since the last in the db
+    timeline_tweets = get_timeline_tweets(screen_name, last_tip_id) 
+    if len(timeline_tweets) > 0:
+        print("process ", timeline_tweets)
+    # save tweets in database
+        for tip in timeline_tweets:
+            save_tip(tip)
+    else: # No recent tweets
+        print("process: No tips to save to DB !" )
+
+
 
 
 
