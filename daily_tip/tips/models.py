@@ -10,6 +10,8 @@ class Tips(models.Model):
     tip = models.TextField(blank=False)
     timestamp = models.DateTimeField(blank=False)
     author = models.CharField(blank=False, unique=False, max_length=255)
+    likes = models.IntegerField(blank=True)
+    retweets = models.IntegerField(blank=True)
 
     class Meta:
         ordering = ['id']
