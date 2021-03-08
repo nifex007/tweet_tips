@@ -17,7 +17,9 @@ def save_tip(tweet):
         t = Tips(id=tweet['id'],
             tip=tweet['text'],
             author=tweet['user']['screen_name'],
-            timestamp=convert_time(tweet['created_at'])
+            timestamp=convert_time(tweet['created_at']),
+            likes=tweet['favorite_count'],
+            retweets=tweet['retweet_count']
             )
 
         t.save()
@@ -36,7 +38,7 @@ def save_tip(tweet):
     
 
 def save_links(links_dict, tip):
-    
+
     # {'id': 1356937628566880260,
     # 'links': ['https://pbs.twimg.com/media/EtTO-UfWgAM3SNZ.png']
     # }
