@@ -17,8 +17,15 @@ def save_tip(tweet):
     Write tip to database
     """
     try:
+        text = tweet['full_text']
+    except BaseException as e:
+        print("Exception {}".format(e))
+        traceback.print_exc()
+        text = tweet['text']
+
+    try:
         t = Tips(id=tweet['id'],
-            tip=tweet['full_text'],
+            tip=text,
             author=tweet['user']['screen_name'],
             timestamp=convert_time(tweet['created_at']),
             likes=tweet['favorite_count'],

@@ -16,16 +16,20 @@ class TwitterView(View):
         api = self.api
         user = self.user_id
         # get the last 200 tweets 
-        tweets = get_timeline_tweets('python_tip', since=None)
+        # tweets = get_timeline_tweets('python_tip', since=None)
 
-        for tweet in tweets:
-            print("tweet ", tweet)
-            print("*************")
-            save_tip(tweet)
-        
-        # t = get_tweet('1356230120604803075') 
-        # print(t)     
+        # for tweet in tweets:
+        #     print("tweet ", tweet)
+        #     print("*************")
+        #     save_tip(tweet)
+    
+        # t = get_tweet('1116283605368606721') 
         # save_tip(t)
+
+        # for status in tweepy.Cursor(api.user_timeline, screen_name='python_tip', since_id=1116283605368606721).items():
+        #     save_tip(status._json)
+        #     print(status._json)
+       
 
 
 
