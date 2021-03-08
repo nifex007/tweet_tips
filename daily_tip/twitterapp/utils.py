@@ -22,7 +22,7 @@ def format_response(response):
     json_str = json.dumps(response)
     #deserialise string into python object
     parsed = json.loads(json_str)
-    # print(json.dumps(parsed, indent=4, sort_keys=True))
+    print(json.dumps(parsed, indent=4, sort_keys=True))
     return parsed
 
 
@@ -33,12 +33,14 @@ def get_tweet(id):
    tweet = tweet._json
    return format_response(tweet)
 
-def get_timeline_tweets(user, count, since=''):
-    tweets = api.user_timeline(screen_name=user,
+count = 3
+def get_timeline_tweets():
+    api = tweepy_api_auth()
+    tweets = api.user_timeline(screen_name='python_tip',
                                     count=count,
                                     include_rts=False,
                                     tweet_mode='extended',
-                                    since_id=since)
+                                    )
     tweets = tweets[0]._json # extract json part of tweepy response
     
     return format_response(tweets)
