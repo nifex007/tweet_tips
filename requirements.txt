@@ -3,8 +3,6 @@ asgiref==3.3.1
 certifi==2020.12.5
 chardet==4.0.0
 Django==3.1.7
-django-apscheduler==0.5.2
-django-rest==0.8.6
 djangorestframework==3.12.2
 idna==2.10
 oauthlib==3.1.0
