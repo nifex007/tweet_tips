@@ -23,6 +23,13 @@
     </head>
     <body>
         <h1>Tips</h1>
+        <div class="search-container">
+            <form action="/tips/" method="post">
+                {% csrf_token %}
+              <input type="text" placeholder="Search.." name="search">
+              <button type="submit">Submit</button>
+            </form>
+          </div>
         {% if not tips_count %}
         <h4>You have no tips saved</h4> 
         {% else %}

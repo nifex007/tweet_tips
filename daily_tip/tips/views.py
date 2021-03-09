@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.views.generic import ListView
 from tips.models import Tips
@@ -20,6 +20,13 @@ class TipsView(ListView):
         context['tips'] = tips
 
         return render(request, 'tips/tips_home.html', context)
+
+    def post(self, request):
+        search_word = request.POST.get('search')
+    
+
+        return redirect('http://{}/tips/{}'.format(request.get_host(),search_word))
+
         
         
 class SearchView(ListView):
