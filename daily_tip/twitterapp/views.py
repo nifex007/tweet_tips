@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import TemplateView
 import tweepy
 from django.views import View
 from twitterapp.utils import tweepy_api_auth, format_response, get_tweet, get_timeline_tweets, extract_media_links
@@ -38,3 +39,7 @@ class TwitterView(View):
 
 class TwitterAuth(View):
     pass
+
+
+class Home(TemplateView):
+    template_name="twitterapp/home.html"
