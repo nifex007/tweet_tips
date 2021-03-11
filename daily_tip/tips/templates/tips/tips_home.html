@@ -27,8 +27,9 @@
             <form action="/tips/" method="post">
                 {% csrf_token %}
               <input type="text" placeholder="Search.." name="search">
-              <button type="submit">Submit</button>
+              <button type="submit">Search</button>
             </form>
+            <button onclick="location.href = '{{home_url}}';" id="myButton" class="float-right submit-button" >Logout</button>
           </div>
         {% if not tips_count %}
         <h4>You have no tips saved</h4> 

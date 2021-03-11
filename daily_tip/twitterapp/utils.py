@@ -1,8 +1,10 @@
+from django.shortcuts import redirect
 import tweepy
 import os
 import json 
 import pprint
 from tips.models import Tips
+
 
 consumer_key = os.environ.get('TWITTER_API_KEY')
 consumer_secret = os.environ.get('TWITTER_API_SECRET')
@@ -12,7 +14,6 @@ access_token_secret = os.environ.get('TWITTER_ACCESS_TOKEN_SECRET')
 
 def tweepy_api_auth():
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    print(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
     return api
@@ -79,5 +80,34 @@ def extract_media_links(tweet):
     
     return has_link, link_dict
 
+def twitter_oauth(callback):
+    return tweepy.OAuthHandler(consumer_key, consumer_secret, callback)
 
 
+def get_twitter_login_url():
+    callback = 'http://127.0.0.1:8000/social/' 
+    oauth_handler = twitter_oauth(callback)
+    login_url = oauth_handler.get_authorization_url()
+
+    print("login url", login_url)
+
+    return login_url
+
+
+def tweepy_api(access_token, access_token_secret):
+    # Authenticated api
+    try:
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+    except tweepy.TweepError as e:
+        print('Exception: {}'.format(e))
+
+    api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
+
+    return api
+
+
+def redirect_to_login(request, signed_in):
+
+    if signed_in:
+        return redirect('http://{}/'.format(request.get_host()))

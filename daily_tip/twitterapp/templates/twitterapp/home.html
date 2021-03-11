@@ -9,33 +9,27 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <style>
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -50px;
+            margin-left: -50px;
+
+}
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Django Social Login</title>
+    <title>Login</title>
   </head>
   <body>
-       {% load socialaccount %}
+    <div class="center">
 
-{% block content %}
+        <a href="{{twitter_login_url}}" class="btn btn-primary">
+        <i class="fa fa-twitter fa-fw"></i>
+        <span>Login with Twitter</span>
+        </a>
+    </div>
 
-<div class="container" style="text-align: center; padding-top: 10%;">
-  <h1>Django Social Login</h1>
-
-  <br /><br />
-
-  {% if user.is_authenticated %}
-    <h3>Welcome {{ user.username }} !!!</h3>
-    <br /><br />
-    <a href="{% url 'account_logout' %}" class="btn btn-danger">Logout</a>
-    {% else %}
-    <!-- Twitter button starts here -->
-    </a>
-    <a href="{% provider_login_url 'twitter' %}" class="btn btn-primary">
-      <i class="fa fa-twitter fa-fw"></i>
-      <span>Login with Twitter</span>
-    </a>
-  {% endif %}
-</div>
-
-{% endblock content %}
 </body>
 </html>

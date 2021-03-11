@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from twitterapp.views import TwitterView, Home
+from twitterapp.views import TwitterView,  TwitterAuth, Home, LogOut
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TwitterView.as_view()),
+    path('social/', TwitterAuth.as_view()),
     path('tips/', include('tips.urls')),
     path("accounts/", include("allauth.urls")),
     path("home", Home.as_view(), name="home"),
+    path("logout", LogOut.as_view(), name="logout")
 ]
