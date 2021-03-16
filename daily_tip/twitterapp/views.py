@@ -83,7 +83,7 @@ class TwitterAuth(View):
             if screen_name_exists: 
                 user = TwitterAuthModel.objects.get(screen_name=profile['screen_name'])
                 if user.is_authenticated:
-                    request.session['screen_name'] = screen_name.screen_name
+                    request.session['screen_name'] = user.screen_name
                     request.session['signed_in']= True
                     return redirect('http://{}/tips/'.format(request.get_host()))
             else:
