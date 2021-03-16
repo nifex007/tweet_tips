@@ -110,7 +110,6 @@ class TwitterAuth(View):
         return HttpResponse("<h2> Social Auth </h2>")
     
 
-
 class Home(TemplateView):
     template_name="twitterapp/home.html"
 

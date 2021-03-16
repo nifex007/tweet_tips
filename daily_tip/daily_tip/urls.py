@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from twitterapp.views import TwitterView,  TwitterAuth, Home, LogOut
+from tips.views import Retweet
 
 urlpatterns = [
     path('admin/', admin.site.urls),

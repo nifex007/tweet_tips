@@ -95,7 +95,7 @@ def get_twitter_login_url():
 
 
 def tweepy_api(access_token, access_token_secret):
-    # Authenticated api
+    # Authenticated api for users
     try:
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)

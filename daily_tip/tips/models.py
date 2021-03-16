@@ -12,6 +12,7 @@ class Tips(models.Model):
     author = models.CharField(blank=False, unique=False, max_length=255)
     likes = models.IntegerField(blank=True)
     retweets = models.IntegerField(blank=True)
+    retweeted = models.BooleanField(blank=True, default=False)
 
     class Meta:
         ordering = ['id']
@@ -24,7 +25,7 @@ class Links(models.Model):
     Links from tips
     """
     tip = models.ForeignKey(Tips, on_delete=models.CASCADE)
-    link = models.TextField(unique=True)
+    link = models.TextField(unique=False)
 
 
 

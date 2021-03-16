@@ -40,7 +40,8 @@
                 <th>time</th>
                 <th>author</th>
                 <th>likes</th>
-                <th>retweet</th>
+                <th>retweets</th>
+                <th></th>
             </tr>
             {% for tip in page_obj %}
             <tr>
@@ -49,6 +50,15 @@
                 <td>{{tip.author}}</td>
                 <td>{{tip.likes}}</td>
                 <td>{{tip.retweets}}</td>
+                <td>
+                    <button onclick="location.href = '{{retweet_url}}{{tip.id}}';" class="float-right submit-button" >
+                        {% if tip.retweeted %}
+                        Undo
+                        {% else %}
+                        Retweet
+                        {% endif %}
+                    </button>
+                </td>
             </tr>
             {% endfor %}
         </table>
