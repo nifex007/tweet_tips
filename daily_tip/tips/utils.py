@@ -1,3 +1,4 @@
+from django.db.models import Max
 from tips.models import Tips, Links
 from dateutil.parser import parse
 import datetime 
@@ -68,13 +69,18 @@ def process():
     screen_name = 'python_tip'
     last_tip = Tips.objects.last()
     last_tip_id = None
+    since_id = None
+    max_id = None
     try:
         last_tip_id = last_tip.id
+        t = Tips.objects.aggregate(Max('id'))
+        since_id = t['id__max']
     except BaseException as e:
         print("Exception {}".format(e))
         traceback.print_exc()
     # get tweets since the last in the db
-    timeline_tweets = get_timeline_tweets(screen_name, last_tip_id) 
+    timeline_tweets = get_timeline_tweets(screen_name, since_id, max_id) 
+    
     if len(timeline_tweets) > 0:
         print("process ", timeline_tweets)
     # save tweets in database

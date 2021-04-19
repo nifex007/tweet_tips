@@ -36,26 +36,55 @@ def get_tweet(id):
    return format_response(tweet)
 
 
-def get_timeline_tweets(screen_name, since):
+def get_timeline_tweets(screen_name, since_id, max_id):
     api = tweepy_api_auth()
-    if since is None:
+    temp_tweets = []
+    tweets_ = []
+
+    if max_id is None and since_id is None:
         tweets = api.user_timeline(screen_name=screen_name,
                                     include_rts=True,
                                     tweet_mode='extended',
                                     exclude_replies=True,
-                                    count=2
+                                    count=200
                                     )
-    else:
+            
+        tweets_list = [tweet._json for tweet in tweets] # extract json part of tweepy response
+        tweets_.append(tweets_list)
+        return format_response(tweets_)
+    
+    elif since_id and max_id is None:
         tweets = api.user_timeline(screen_name=screen_name,
                                         include_rts=True,
                                         tweet_mode='extended',
-                                        since_id=since,
-                                        count=2,
+                                        since_id = since_id,
+                                        count=200,
                                         exclude_replies=True,
                                         )
-    
-    
-    tweets_list = [tweet._json for tweet in tweets] # extract json part of tweepy response
+        tweets_list = [tweet._json for tweet in tweets]
+        if len(tweets_list) > 0:
+            tweets_.append(tweets_list)
+            max_id = tweets_list[-1]['id']
+            get_timeline_tweets(screen_name, since_id, max_id)
+        else:
+            return format_response(tweets_)
+    else:
+        tweets = api.user_timeline(screen_name=screen_name,
+                                    include_rts=True,
+                                    tweet_mode='extended',
+                                    exclude_replies=True,
+                                    count=200,
+                                    since_id = since_id,
+                                    max_id = max_id
+                                    )
+        
+        tweets_list = [tweet._json for tweet in tweets]
+        tweets_.append(tweets_list)
+        if len(tweets_list) > 0:
+            max_id = tweets_list[-1]['id']
+            get_timeline_tweets(screen_name, since_id, max_id)
+        return format_response(tweets_)
+
    
     return format_response(tweets_list)
 

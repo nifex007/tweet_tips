@@ -6,5 +6,5 @@ from tips.utils import process
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(process, 'interval', seconds=500)
+    scheduler.add_job(process, 'interval', seconds=40)
     scheduler.start()
